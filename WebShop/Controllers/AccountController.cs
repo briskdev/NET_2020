@@ -14,6 +14,7 @@ namespace WebShop.Controllers
         public IActionResult SignUp()
         {
             var model = new UserModel();
+            // new line
             return View(model);
         }
 
