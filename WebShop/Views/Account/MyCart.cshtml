@@ -3,22 +3,36 @@
     ViewData["Title"] = "MyCart";
 }
 
+@if(TempData["message"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["message"]
+    </div>
+}
+
 @if (Model.Count == 0)
 {
     <h3>Your cart is empty!</h3>
 }
 else
 {
+    <a asp-controller="Account" asp-action="Confirm" class="btn btn-success">Confirm order</a>
+    <br/><br/>
+
     <table class="table table-striped">
         <tr>
             <th>Item name</th>
             <th>Item price</th>
+            <th>Count</th>
+            <th></th>
         </tr>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Price</td>
+                <td>@item.Count</td>
+                <td><a asp-controller="Account" asp-action="DeleteCartItem" asp-route-id="@item.Id">Remove</a></td>
             </tr>
         }
     </table>

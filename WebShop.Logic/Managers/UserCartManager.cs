@@ -53,5 +53,25 @@ namespace WebShop.Logic
                 return userCart;
             }
         }
+
+        public static void RemoveByItem(int userId, int itemId)
+        {
+            using (var db = new DbContext())
+            {
+                db.UserCart.RemoveRange(db.UserCart.Where(c => c.UserId == userId && c.ItemId == itemId));
+
+                db.SaveChanges();
+            }
+        }
+
+        public static void RemoveByUser(int userId)
+        {
+            using (var db = new DbContext())
+            {
+                db.UserCart.RemoveRange(db.UserCart.Where(c => c.UserId == userId));
+
+                db.SaveChanges();
+            }
+        }
     }
 }

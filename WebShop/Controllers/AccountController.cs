@@ -91,13 +91,38 @@ namespace WebShop.Controllers
         {
             var userCart = UserCartManager.GetByUser(HttpContext.Session.GetUserId());
             // attēlošanai nepieciešamas tikai preces
-            var items = userCart.Select(c => c.Item.ToModel()).ToList();
+            // grupējam pēc ItemId un skaitām, cik preces ir.
+            var items = userCart.Select(c => c.Item.ToModel())
+                .GroupBy(i => i.Id)
+                .Select(g =>
+                {
+                    // grupas pirmais ieraksts ir - prece
+                    // un skaits - cik šādu preču
+                    var item = g.First();
+                    item.Count = g.Count();
+
+                    return item;
+                }).ToList();
+            
             return View(items);
         }
 
         public IActionResult Confirm()
         {
-            return View();
+            // TODO: pārbaude, ka lietotājs ir pieslēdzies (autentificējies)
+            UserCartManager.RemoveByUser(HttpContext.Session.GetUserId());
+            TempData["message"] = "Your order has been successfully received!";
+
+            return RedirectToAction(nameof(MyCart));
+        }
+
+        public IActionResult DeleteCartItem(int id)
+        {
+            // nepieciešams norādīt arī UserId no sesijas, lai nedzēstu cita lietotāja preces.
+            UserCartManager.RemoveByItem(HttpContext.Session.GetUserId(), id);
+            TempData["message"] = "Item removed!";
+
+            return RedirectToAction(nameof(MyCart));
         }
     }
 }

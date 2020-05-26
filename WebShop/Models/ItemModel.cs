@@ -29,5 +29,7 @@ namespace WebShop.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         public string Image { get; set; }
+
+        public int Count { get; set; }
     }
 }
