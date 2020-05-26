@@ -1,0 +1,24 @@
+﻿@model List<CategoryModel>
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h2>Categories</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    @foreach(var category in Model)
+    {
+        <tr>
+            <td>@category.Name</td>
+            <td>
+                <a asp-controller="Item" asp-action="Index" asp-route-id="@category.Id">
+                    View items
+                </a>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,26 @@
+﻿@model ItemModel
+@{
+    ViewData["Title"] = "View item";
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    Nosaukums: @Model.Name
+</div>
+<div>
+    Kategorija: @Model.Category.Name
+</div>
+<div>
+    Apraksts: @Model.Description
+</div>
+<div>
+    Cena: @Model.Price
+</div>
+<div>
+    Atrašanās vieta: @Model.Location
+</div>
+
+<br />
+<a asp-controller="Category" asp-action="Index">Atpakaļ</a>
+<br />

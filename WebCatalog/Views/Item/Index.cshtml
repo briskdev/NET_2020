@@ -1,0 +1,37 @@
+﻿@model List<ItemModel>
+@{
+    ViewData["Title"] = "Items";
+}
+
+<h2>Items</h2>
+
+<br/>
+<a asp-controller="Category" asp-action="Index">Atpakaļ</a>
+<br />
+
+@if (Model.Count > 0)
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Nosaukums</th>
+            <th>Apraksts</th>
+            <th>Cena</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp-controller="Item" asp-action="View" asp-route-id="@item.Id">View</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div>Šajā kategorijā nav preču!</div>
+}
